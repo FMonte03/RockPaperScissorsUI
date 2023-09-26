@@ -1,0 +1,9 @@
+:root{
+    box-sizing: border-box;
+}
+
+.ins{
+    border: solid black 2px;
+    height: 50px;
+    width: 50px;
+}
