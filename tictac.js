@@ -17,7 +17,10 @@ inps.forEach( (inp) =>  {
 ); 
 
 
-let currentMark = 'X'
+let currentMark = player1
+
+
+
 
 
 const tiles = {}
@@ -33,14 +36,20 @@ function updateValues(){
 }
 
 
+let gameOver = false 
+
 
 function changeMark() {
-    if (currentMark == 'X' ){
-        currentMark = 'O'
+    if (currentMark == player1 ){
+        currentMark = player2
     }
-    else (currentMark = 'X' )
+    else (currentMark = player1 )
 
 }
+
+
+
+
 
 //function called every time an available square is pressed 
 function squareIsPressed(tile){
@@ -48,10 +57,30 @@ function squareIsPressed(tile){
     updateValues(); 
     checkWin(); 
     changeMark(); 
+    updateTurnIndicator(); 
+}
 
-    
+const turnIndicator = document.querySelector('.turnIndicator')
+
+function updateTurnIndicator(){
+
+
+
+if(gameOver == true){} 
+
+
+else if(currentMark == player1){
+    turnIndicator.innerHTML = `${player1} Turn`
+}
+
+
+
 
 }
+
+
+const marks = new Set([player1, player2])
+
 
 console.log(tiles)
 /* 
@@ -60,6 +89,8 @@ function that checks win after every turn.
 square1|square2|square3
 square4|square5|square6
 square7|square8|square9
+
+
 
 
 */
@@ -74,45 +105,46 @@ return player2Name
 } 
 
 
+
+
 function checkWin(){
 
-    if ((tiles['square1'] == tiles['square2']) && (tiles['square3'] == tiles['square2'])  && tiles.square1 != ' '){
+    if ((tiles['square1'] == tiles['square2']) && (tiles['square3'] == tiles['square2'])  && marks.has(tiles['square1'])){
         let winner = whoWon(tiles.square1); 
-        console.log(`${winner} WINS`)
     }
-    else if ((tiles['square1'] == tiles['square4']) && (tiles['square7'] == tiles['square4'])  && tiles.square1 != ' '){
+    else if ((tiles['square1'] == tiles['square4']) && (tiles['square7'] == tiles['square4'])  && marks.has(tiles['square1'])){
         let winner = whoWon(tiles.square1); 
-        console.log(`${winner} WINS`)
+        
     }
     
-    else if ((tiles['square2'] == tiles['square5']) && (tiles['square5'] == tiles['square8']) && tiles.square1 != ' '){
+    else if ((tiles['square2'] == tiles['square5']) && (tiles['square5'] == tiles['square8']) && marks.has(tiles['square2'])){
         let winner = whoWon(tiles.square2); 
-        console.log(`${winner} WINS`)
+        
     }
 
-    else if ((tiles['square3'] == tiles['square6']) && (tiles['square6'] == tiles['square9']) && tiles.square1 != ''){
+    else if ((tiles['square3'] == tiles['square6']) && (tiles['square6'] == tiles['square9']) && marks.has(tiles['square3'])){
         let winner = whoWon(tiles.square3); 
-        console.log(`${winner} WINS`)
+        
     }
 
-    else if ((tiles['square4'] == tiles['square5']) && (tiles['square5'] == tiles['square6']) && tiles.square1 != ' '){
+    else if ((tiles['square4'] == tiles['square5']) && (tiles['square5'] == tiles['square6']) && marks.has(tiles['square4'])){
         let winner = whoWon(tiles.square4); 
-        console.log(`${winner} WINS`)
+        
     }
 
-    else if ((tiles['square7'] == tiles['square8']) && (tiles['square8'] == tiles['square9']) && tiles.square1 != ' '){
+    else if ((tiles['square7'] == tiles['square8']) && (tiles['square8'] == tiles['square9']) && marks.has(tiles['square7'])){
         let winner = whoWon(tiles.square7); 
-        console.log(`${winner} WINS`)
+        
     }
 
-    else if ((tiles['square1'] == tiles['square5']) && (tiles['square5'] == tiles['square9']) && tiles.square1 != ' ') {
+    else if ((tiles['square1'] == tiles['square5']) && (tiles['square5'] == tiles['square9']) && marks.has(tiles['square1'])) {
         let winner = whoWon(tiles.square1); 
-        console.log(`${winner} WINS`)
+        
     }
 
-    else if ((tiles['square3'] == tiles['square5']) && (tiles['square5'] == tiles['square7']) && tiles.square1 != ' '){
+    else if ((tiles['square3'] == tiles['square5']) && (tiles['square5'] == tiles['square7']) && marks.has(tiles['square3'])){
         let winner = whoWon(tiles.square3); 
-        console.log(`${winner} WINS`)
+        
     }
     else {
         return
