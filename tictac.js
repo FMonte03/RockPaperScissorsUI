@@ -2,7 +2,9 @@
 let player1 = 'X'
 let player2 = 'O'
 let player1Name = 'Filippo'
-let player2Name = 'not FIlippo'
+let player2Name = 'not Filippo'
+let winner = "" 
+
 //create a list with all square elements 
 const inps = document.querySelectorAll('.ins'); 
 
@@ -43,36 +45,56 @@ function changeMark() {
     if (currentMark == player1 ){
         currentMark = player2
     }
-    else (currentMark = player1 )
+    else {currentMark = player1 }
 
 }
 
 
+
+
+function gameisTie(){
+    turnIndicator.innerHTML = `Game is a Tie!`
+}
+
+function playerWins(){
+    turnIndicator.innerHTML = `${winner} Wins!`
+}
 
 
 
 //function called every time an available square is pressed 
 function squareIsPressed(tile){
     tile.innerHTML = currentMark; 
+   // disableTile(tile) 
     updateValues(); 
     checkWin(); 
     changeMark(); 
     updateTurnIndicator(); 
+    checkTie()
+    if (gameOver && !gameTie){
+        playerWins()
+    }
+    else if(gameOver && gameTie){
+        gameisTie()
+    }
 }
 
-const turnIndicator = document.querySelector('.turnIndicator')
+//function disableTile(){}
+
+const turnIndicator = document.querySelector('#turnIndicator')
 
 function updateTurnIndicator(){
 
 
 
-if(gameOver == true){} 
+if(gameOver == true){turnIndicator.innerHTML = "Game Over!"} 
 
 
 else if(currentMark == player1){
-    turnIndicator.innerHTML = `${player1} Turn`
+    turnIndicator.innerHTML = `Player ${player1} Turn`
 }
 
+else{turnIndicator.innerHTML = `Player ${player2} Turn`}
 
 
 
@@ -95,55 +117,83 @@ square7|square8|square9
 
 */
 //check who won the game by seeing if the mark of the first player == winning mark. 
+
+
 function whoWon(mark){
-if (mark == player1){
-    return player1Name
-}
 
+    gameOver = true
+    if (mark == player1){
+        return player1Name
+    }
 
-return player2Name
+    
+    return player2Name
 } 
+let gameTie = false
 
+//if all squares have values and game != over, return tie = true 
+// if game is tie 
+function checkTie(){
 
+    let filled = true //check if all tiles are filled
+
+    for (let key in tiles){
+        if(tiles[key] == ""){
+            filled = false
+        }
+    }
+
+   
+    if(filled){
+        gameOver = true
+    }
+
+    if(gameOver && winner == ""){
+        gameTie = true 
+    }
+    
+    
+    return 
+}
 
 
 function checkWin(){
 
     if ((tiles['square1'] == tiles['square2']) && (tiles['square3'] == tiles['square2'])  && marks.has(tiles['square1'])){
-        let winner = whoWon(tiles.square1); 
+         winner = whoWon(tiles.square1); 
     }
     else if ((tiles['square1'] == tiles['square4']) && (tiles['square7'] == tiles['square4'])  && marks.has(tiles['square1'])){
-        let winner = whoWon(tiles.square1); 
+         winner = whoWon(tiles.square1); 
         
     }
     
     else if ((tiles['square2'] == tiles['square5']) && (tiles['square5'] == tiles['square8']) && marks.has(tiles['square2'])){
-        let winner = whoWon(tiles.square2); 
+         winner = whoWon(tiles.square2); 
         
     }
 
     else if ((tiles['square3'] == tiles['square6']) && (tiles['square6'] == tiles['square9']) && marks.has(tiles['square3'])){
-        let winner = whoWon(tiles.square3); 
+         winner = whoWon(tiles.square3); 
         
     }
 
     else if ((tiles['square4'] == tiles['square5']) && (tiles['square5'] == tiles['square6']) && marks.has(tiles['square4'])){
-        let winner = whoWon(tiles.square4); 
+         winner = whoWon(tiles.square4); 
         
     }
 
     else if ((tiles['square7'] == tiles['square8']) && (tiles['square8'] == tiles['square9']) && marks.has(tiles['square7'])){
-        let winner = whoWon(tiles.square7); 
+         winner = whoWon(tiles.square7); 
         
     }
 
     else if ((tiles['square1'] == tiles['square5']) && (tiles['square5'] == tiles['square9']) && marks.has(tiles['square1'])) {
-        let winner = whoWon(tiles.square1); 
+         winner = whoWon(tiles.square1); 
         
     }
 
     else if ((tiles['square3'] == tiles['square5']) && (tiles['square5'] == tiles['square7']) && marks.has(tiles['square3'])){
-        let winner = whoWon(tiles.square3); 
+         winner = whoWon(tiles.square3); 
         
     }
     else {
