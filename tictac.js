@@ -4,6 +4,13 @@ let player2 = 'O'
 let player1Name = 'Filippo'
 let player2Name = 'not Filippo'
 let winner = "" 
+let player1Score = 0 
+let player2Score = 0 
+let tieScore = 0 
+let gameTie = false
+let gameOver = false 
+let currentMark = player1
+
 
 //create a list with all square elements 
 const inps = document.querySelectorAll('.ins'); 
@@ -19,26 +26,64 @@ inps.forEach( (inp) =>  {
 ); 
 
 
-let currentMark = player1
+
+const player1ScoreBoard = document.querySelector('.player1Score')
+const player2ScoreBoard = document.querySelector('.player2Score')
+const tieScoreBoard = docusment.querySelector('.TieScore')
+
+function awardPoint(winner){
+    if(gameTie){
+        tieScore += 1 
+        tieScoreBoard.innerHTML = `${tieScore}`
+
+    }
+    else if(player1Name == winner){
+        player1Score += 1 
+        player1ScoreBoard.innerHTML = `${player1Score}`
+
+    }
+    else{
+        player2Score += 1 
+        player2ScoreBoard.innerHTML = `${player2Score}`
+    }
+
+} 
+function resetGame(){
+    winner = ""
+    gameTie = false 
+    gameOver = false 
+    updateValues(reset=true)
 
 
-
+}
 
 
 const tiles = {}
 // update value of every square every turn to help checkWin functino
 updateValues(); 
-function updateValues(){
+
+function updateValues(reset= false){
+    if(!reset){
     for(let i = 0; i < inps.length; i++){
         tiles[inps[i].getAttribute('data-value')] = inps[i].innerHTML; 
+    }
     
     
     }
-    console.log(tiles)
+    else {
+        for(let i = 0; i < inps.length; i++){
+            tiles[inps[i].getAttribute('data-value')] = ""; 
+            
+        } 
+        inps.forEach( (inp) =>  { 
+            inp.innerHTML = "" 
+    })
+    
+}
 }
 
 
-let gameOver = false 
+
 
 
 function changeMark() {
@@ -73,9 +118,12 @@ function squareIsPressed(tile){
     checkTie()
     if (gameOver && !gameTie){
         playerWins()
+        awardPoint(winner)
+        resetGame()
     }
     else if(gameOver && gameTie){
         gameisTie()
+        resetGame()
     }
 }
 
@@ -119,6 +167,8 @@ square7|square8|square9
 //check who won the game by seeing if the mark of the first player == winning mark. 
 
 
+
+
 function whoWon(mark){
 
     gameOver = true
@@ -129,7 +179,7 @@ function whoWon(mark){
     
     return player2Name
 } 
-let gameTie = false
+
 
 //if all squares have values and game != over, return tie = true 
 // if game is tie 
