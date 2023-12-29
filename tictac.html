@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="tictac.css">
     </head>
     <body>
-        
+        <h1>The TicTacToe</h1>
             <div class="board">
                 <div class="ins" data-value="square1"></div>
                 <div class="ins" data-value="square2"></div>
@@ -40,6 +40,12 @@
                 </div>
 
                 <button class="resetButton">RESET</button>
+                <label for="gameMode">Select Game Mode</label>
+                <select name="gameMode" id="gameMode">
+                    <option value="passPlay" selected>Pass Play</option>
+                    <option value="easy">Easy</option>
+                    <option value="impossible">Impossible</option>
+                </select>
 
 
             </div>

@@ -10,6 +10,7 @@ let tieScore = 0
 let gameTie = false
 let gameOver = false 
 let currentMark = player1
+let gameMode = "passPlay"
 
 
 //create a list with all square elements 
@@ -19,17 +20,29 @@ const DEFAULT_PLAYER_MARK = 'X'
 //add an event listener for every square
 inps.forEach( (inp) =>  { 
     inp.addEventListener('click', () => {
-        squareIsPressed(inp)
+        if (gameMode=="passPlay"){squareIsPressed(inp)}
+        else if(gameMode="easy"){squareIsPressedBot(inp)}
     }
     );
 } 
 ); 
 
+const selectMenu = document.querySelector('#gameMode')
+
+selectMenu.addEventListener("change", () => {
+    gameModeSelected(selectMenu)
+}
+)
+
+function gameModeSelected(menu){//if called gamemode has been changed, meaning everything must be reset and we must get value of the game mode
+    gameMode = menu.value 
+    resetAll()
+}
 
 
 const player1ScoreBoard = document.querySelector('.player1Score')
 const player2ScoreBoard = document.querySelector('.player2Score')
-const tieScoreBoard = docusment.querySelector('.TieScore')
+const tieScoreBoard = document.querySelector('.tieScore')
 
 function awardPoint(winner){
     if(gameTie){
@@ -48,6 +61,14 @@ function awardPoint(winner){
     }
 
 } 
+
+function resetAll(){
+    resetGame()
+    player1Score = 0 
+    player2Score = 0 
+    tieScore = 0 
+
+}
 function resetGame(){
     winner = ""
     gameTie = false 
@@ -62,7 +83,7 @@ const tiles = {}
 // update value of every square every turn to help checkWin functino
 updateValues(); 
 
-function updateValues(reset= false){
+function updateValues(reset= false){// if reset = true then this function has been called from reset function and will erase the div values and the board values. 
     if(!reset){
     for(let i = 0; i < inps.length; i++){
         tiles[inps[i].getAttribute('data-value')] = inps[i].innerHTML; 
@@ -81,6 +102,7 @@ function updateValues(reset= false){
     
 }
 }
+
 
 
 
@@ -123,9 +145,35 @@ function squareIsPressed(tile){
     }
     else if(gameOver && gameTie){
         gameisTie()
+        awardPoint()
         resetGame()
     }
 }
+
+
+function botPlay()
+
+function squareIsPressedBot(tile){
+    tile.innerHTML = player1;
+     //same as square is pressed function, except bot must act other player, this will be done by play the bot turn after the player turn and after cheking all win conditions. 
+    updateValues(); 
+    checkWin(); 
+    changeMark(); 
+    updateTurnIndicator(); 
+    checkTie()
+    if (gameOver && !gameTie){
+        playerWins()
+        awardPoint(winner)
+        resetGame()
+    }
+    else if(gameOver && gameTie){
+        gameisTie()
+        awardPoint()
+        resetGame()
+    }
+    botPlay(easy = true)    //if game over, bot will play first next game, instead of player, if game not over it will just play the next turn. 
+}
+
 
 //function disableTile(){}
 
