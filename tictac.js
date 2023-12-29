@@ -1,6 +1,8 @@
+import { easyBot } from './easybot.js'
+
 
 let player1 = 'X'
-let player2 = 'O'
+let player2 = 'O'          
 let player1Name = 'Filippo'
 let player2Name = 'not Filippo'
 let winner = "" 
@@ -21,17 +23,42 @@ const DEFAULT_PLAYER_MARK = 'X'
 inps.forEach( (inp) =>  { 
     inp.addEventListener('click', () => {
         if (gameMode=="passPlay"){squareIsPressed(inp)}
-        else if(gameMode="easy"){squareIsPressedBot(inp)}
+        else if(gameMode=="easy"){squareIsPressedBot(inp)
+        player2Name = "Duckling"
+        player2 = "🦆"
+    }
+    else{squareIsPressedBot(inp)
+    player2Name = "THE EAGLE"
+    player2= "🦅"}
     }
     );
 } 
 ); 
 
+
+//themes, themes of site should change based on gamemode: 
+function setHawkTheme(){
+
+}
+function setDucklingTheme(){
+
+}
+
+function setPassPlayTheme(){
+    
+}
+
+
+
 const selectMenu = document.querySelector('#gameMode')
 
 selectMenu.addEventListener("change", () => {
     gameModeSelected(selectMenu)
+    
 }
+
+
+
 )
 
 function gameModeSelected(menu){//if called gamemode has been changed, meaning everything must be reset and we must get value of the game mode
@@ -64,16 +91,20 @@ function awardPoint(winner){
 
 function resetAll(){
     resetGame()
+   
     player1Score = 0 
     player2Score = 0 
     tieScore = 0 
+    player1ScoreBoard.innerHTML = `${player1Score}`
+    player2ScoreBoard.innerHTML = `${player2Score}`
+    tieScoreBoard.innerHTML = `${tieScore}`
 
 }
 function resetGame(){
     winner = ""
     gameTie = false 
     gameOver = false 
-    updateValues(reset=true)
+    updateValues(true)
 
 
 }
@@ -83,7 +114,7 @@ const tiles = {}
 // update value of every square every turn to help checkWin functino
 updateValues(); 
 
-function updateValues(reset= false){// if reset = true then this function has been called from reset function and will erase the div values and the board values. 
+function updateValues(reset){// if reset = true then this function has been called from reset function and will erase the div values and the board values. 
     if(!reset){
     for(let i = 0; i < inps.length; i++){
         tiles[inps[i].getAttribute('data-value')] = inps[i].innerHTML; 
@@ -127,51 +158,63 @@ function playerWins(){
     turnIndicator.innerHTML = `${winner} Wins!`
 }
 
+function checkGameOver(){
+    checkWin(); 
+    checkTie()
+    if (gameOver && !gameTie){
+        playerWins()
+        awardPoint(winner)
+        resetGame()
 
+    }
+    else if(gameOver && gameTie){
+        gameisTie()
+        awardPoint()
+        resetGame()
+
+    }
+
+}
 
 //function called every time an available square is pressed 
 function squareIsPressed(tile){
     tile.innerHTML = currentMark; 
    // disableTile(tile) 
     updateValues(); 
-    checkWin(); 
     changeMark(); 
     updateTurnIndicator(); 
-    checkTie()
-    if (gameOver && !gameTie){
-        playerWins()
-        awardPoint(winner)
-        resetGame()
-    }
-    else if(gameOver && gameTie){
-        gameisTie()
-        awardPoint()
-        resetGame()
-    }
+    checkGameOver()
 }
 
+let botEasy = new easyBot(tiles)
 
-function botPlay()
+function botPlay(easy = false, impossible = false){
+    if(easy){
+        botEasy.getCurrentBoard(tiles)
+        botEasy.setAvailableSquares()
+        let choice = botEasy.getChoice()
+        document.querySelector(`[data-value=${choice}]`).innerHTML = player2
+
+    }
+
+}
 
 function squareIsPressedBot(tile){
     tile.innerHTML = player1;
      //same as square is pressed function, except bot must act other player, this will be done by play the bot turn after the player turn and after cheking all win conditions. 
     updateValues(); 
-    checkWin(); 
-    changeMark(); 
-    updateTurnIndicator(); 
-    checkTie()
-    if (gameOver && !gameTie){
-        playerWins()
-        awardPoint(winner)
-        resetGame()
+    checkGameOver()
+    if(gameOver){return}
+
+    if(gameMode == "easy"){
+        botPlay(true, false)  
+    }  //if game over, bot will play first next game, instead of player, if game not over it will just play the next turn. 
+    else if(gameMode == "impossible"){
+        botPlay(false, true)
     }
-    else if(gameOver && gameTie){
-        gameisTie()
-        awardPoint()
-        resetGame()
-    }
-    botPlay(easy = true)    //if game over, bot will play first next game, instead of player, if game not over it will just play the next turn. 
+    updateValues()
+    checkGameOver()
+    
 }
 
 
