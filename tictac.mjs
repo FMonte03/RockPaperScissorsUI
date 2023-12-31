@@ -1,4 +1,5 @@
-import { easyBot } from './easybot.js'
+import { easyBot } from './easybot.mjs'
+import {impossibleBot} from './impossiblebot.mjs'
 
 
 let player1 = 'X'
@@ -23,20 +24,27 @@ const DEFAULT_PLAYER_MARK = 'X'
 inps.forEach( (inp) =>  { 
     inp.addEventListener('click', () => {
         if (gameMode=="passPlay"){squareIsPressed(inp)}
-        else if(gameMode=="easy"){squareIsPressedBot(inp)
-        player2Name = "Duckling"
+        else if(gameMode=="easy"){
+            player2Name = "Duckling"
         player2 = "🦆"
+        squareIsPressedBot(inp)
+        
     }
-    else{squareIsPressedBot(inp)
-    player2Name = "THE EAGLE"
-    player2= "🦅"}
+    else{
+        player2Name = "THE EAGLE"
+    player2= "🦅"
+        squareIsPressedBot(inp)
+    }
     }
     );
 } 
 ); 
 
 
-//themes, themes of site should change based on gamemode: 
+//themes, themes of site should change based on gamemode:
+ /*
+
+
 function setHawkTheme(){
 
 }
@@ -47,7 +55,7 @@ function setDucklingTheme(){
 function setPassPlayTheme(){
     
 }
-
+*/
 
 
 const selectMenu = document.querySelector('#gameMode')
@@ -187,6 +195,7 @@ function squareIsPressed(tile){
 }
 
 let botEasy = new easyBot(tiles)
+let botImpossible = new impossibleBot(tiles, player1, player2)
 
 function botPlay(easy = false, impossible = false){
     if(easy){
@@ -195,6 +204,9 @@ function botPlay(easy = false, impossible = false){
         let choice = botEasy.getChoice()
         document.querySelector(`[data-value=${choice}]`).innerHTML = player2
 
+    }
+    if(impossible){
+        document.querySelector(`[data-value=${botImpossible.getMove(tiles)}]`)
     }
 
 }
