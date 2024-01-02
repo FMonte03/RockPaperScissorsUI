@@ -206,7 +206,8 @@ function botPlay(easy = false, impossible = false){
 
     }
     if(impossible){
-        document.querySelector(`[data-value=${botImpossible.getMove(tiles)}]`)
+        console.log(botImpossible.getMove(tiles))
+        document.querySelector(`[data-value=${botImpossible.getMove(tiles)}]`).innerHTML = player2
     }
 
 }
