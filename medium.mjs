@@ -1,4 +1,4 @@
-export class impossibleBot{
+export class mediumBot{
     constructor(board, player, bot){// AI to follow Newell and Simon's strategy found on wikipedia
         /*
         Win: If the player has two in a row, they can place a third to get three in a row.
@@ -42,28 +42,30 @@ export class impossibleBot{
         let bot = this.bot
         let player = this.player
         let available = this.setAvailableSquares(board)
-        let r1 = "square1 , square2 , square3"
+        let r1 = "square1,square2,square3"
         r1 = r1.split(",")
-        let r2 = "square4 , square5 , square6"
+        let r2 = "square4,square5,square6"
         r2 = r2.split(",")
-        let r3 = "square7 , square8 , square9"
+        let r3 = "square7,square8,square9"
         r3 = r3.split(",")
-        let c1 = "square1 , square4 , square7"
+        let c1 = "square1,square4,square7"
         c1 = c1.split(",")
-        let c2 = "square2 , square5 , square6"
+        let c2 = "square2,square5,square8"
         c2 = c2.split(",")
-        let c3 = "square3 , square6 , square9"
+        let c3 = "square3,square6,square9"
         c3 = c3.split(",")
-        let a1 = "square1 , square5 , square9"
+        let a1 = "square1,square5,square9"
         a1 = a1.split(",")
-        let a2 = "square3 , square5 , square7"
+        let a2 = "square3,square5,square7"
         a2 = a2.split(",")
 
+        let result = null
         let combinations = [r1,r2,r3,c1,c2,c3,a1,a2] //loop through every conbination, if there is a 2 in a row for bot and leftover is available, win. if 2 in a row for player, block.
         combinations.forEach(combination => {
             let p = 0 
             let b = 0 
             let e = ""
+
             for(let i = 0; i < combination.length; i++){
                 if(board[combination[i]] == player){
                     p++
@@ -78,29 +80,40 @@ export class impossibleBot{
 
             }
 
-            if(p == 2 && e != ""){
-                return e 
+            if(p == 2 && e !== ""){
+                console.log("BLOCK")
+                result = e     
             }
-            else if(b == 2 && e !=""){
-                return e 
+            else if(b == 2 && e !==""){
+                console.log("Win")
+                result = e 
+            }
+            if(result !== null){
+                return 
             }
             
         });
+        if(result != null){
+            return result
+        }
         if(available.includes("square5")){ //if center available mark center
-            return square5
+            console.log("Center")
+            return "square5"
         }
 
         let corners = ["square1", "square3", "square7", "square9"] //if corner available mark corner
         for(let i = 0; i < corners.length ; i++){
             if(available.includes(corners[i])){
-                return corners[i]
+                console.log("Corner")
+                return corners[i];
             }
         }
 
-        //if a conbination is empty, mark the center of it
+        //if a combination is empty, mark the center of it
         combinations.forEach(combination => {
             if(combination.every(i => available.includes(i)) ){
-                return combination[1]
+                console.log("CombCenter")
+                return combination[1];
             }
 
 

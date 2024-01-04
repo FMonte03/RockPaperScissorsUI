@@ -1,5 +1,5 @@
 import { easyBot } from './easybot.mjs'
-import {impossibleBot} from './impossiblebot.mjs'
+import {mediumBot} from './medium.mjs'
 
 
 let player1 = 'X'
@@ -19,26 +19,21 @@ let gameMode = "passPlay"
 //create a list with all square elements 
 const inps = document.querySelectorAll('.ins'); 
 
+const resetButton = document.querySelector('.resetButton')
+
+resetButton.addEventListener('click', resetAll)
+
+
 const DEFAULT_PLAYER_MARK = 'X'
 //add an event listener for every square
 inps.forEach( (inp) =>  { 
-    inp.addEventListener('click', () => {
-        if (gameMode=="passPlay"){squareIsPressed(inp)}
-        else if(gameMode=="easy"){
-            player2Name = "Duckling"
-        player2 = "🦆"
-        squareIsPressedBot(inp)
-        
-    }
-    else{
-        player2Name = "THE EAGLE"
-    player2= "🦅"
-        squareIsPressedBot(inp)
-    }
+    inp.addEventListener('click', handlePlayerChoice)
+    
     }
     );
-} 
-); 
+
+
+
 
 
 //themes, themes of site should change based on gamemode:
@@ -56,7 +51,40 @@ function setPassPlayTheme(){
     
 }
 */
+function handlePlayerChoice(){
+    if (gameMode=="passPlay"){
+        player2 = "O"
+        marks = new Set([player1, player2])
+        squareIsPressed(this)}
+    else if(gameMode=="easy"){
+        player2Name = "Duckling"
+    player2 = "🦆"
+    marks = new Set([player1, player2])
+    squareIsPressedBot(this)
+    
+}
+else{
+    player2Name = "THE EAGLE"
+player2= "🦅"
+marks = new Set([player1, player2])
+    squareIsPressedBot(this)
+}
 
+}
+
+//after a player and bot plays a tile it should be disabled so player cant click on it
+function disableTile(tile){
+    console.log(`Tile Disabled ${tile}`)
+    tile.removeEventListener('click', handlePlayerChoice)
+}
+
+//enable all the tiles again
+function enableAllTiles(){
+    inps.forEach( (inp) =>  { 
+    inp.addEventListener('click', handlePlayerChoice)
+    
+    }
+    );}
 
 const selectMenu = document.querySelector('#gameMode')
 
@@ -113,6 +141,7 @@ function resetGame(){
     gameTie = false 
     gameOver = false 
     updateValues(true)
+    enableAllTiles()
 
 
 }
@@ -173,12 +202,14 @@ function checkGameOver(){
         playerWins()
         awardPoint(winner)
         resetGame()
+        return true
 
     }
     else if(gameOver && gameTie){
         gameisTie()
         awardPoint()
         resetGame()
+        return true
 
     }
 
@@ -187,7 +218,7 @@ function checkGameOver(){
 //function called every time an available square is pressed 
 function squareIsPressed(tile){
     tile.innerHTML = currentMark; 
-   // disableTile(tile) 
+    disableTile(tile) 
     updateValues(); 
     changeMark(); 
     updateTurnIndicator(); 
@@ -195,7 +226,7 @@ function squareIsPressed(tile){
 }
 
 let botEasy = new easyBot(tiles)
-let botImpossible = new impossibleBot(tiles, player1, player2)
+let botImpossible = new mediumBot(tiles, player1, player2)
 
 function botPlay(easy = false, impossible = false){
     if(easy){
@@ -203,23 +234,27 @@ function botPlay(easy = false, impossible = false){
         botEasy.setAvailableSquares()
         let choice = botEasy.getChoice()
         document.querySelector(`[data-value=${choice}]`).innerHTML = player2
+        disableTile(document.querySelector(`[data-value=${choice}]`))
 
     }
     if(impossible){
-        console.log(botImpossible.getMove(tiles))
-        document.querySelector(`[data-value=${botImpossible.getMove(tiles)}]`).innerHTML = player2
+       let move = botImpossible.getMove(tiles)
+        document.querySelector(`[data-value=${move}]`).innerHTML = player2
+        disableTile(document.querySelector(`[data-value=${move}]`))
+
     }
 
 }
 
 function squareIsPressedBot(tile){
     tile.innerHTML = player1;
+    disableTile(tile)
      //same as square is pressed function, except bot must act other player, this will be done by play the bot turn after the player turn and after cheking all win conditions. 
     updateValues(); 
-    checkGameOver()
-    if(gameOver){return}
+    
+    if(checkGameOver()){return}
 
-    if(gameMode == "easy"){
+    else if(gameMode == "easy"){
         botPlay(true, false)  
     }  //if game over, bot will play first next game, instead of player, if game not over it will just play the next turn. 
     else if(gameMode == "impossible"){
@@ -227,6 +262,8 @@ function squareIsPressedBot(tile){
     }
     updateValues()
     checkGameOver()
+   
+    
     
 }
 
@@ -253,7 +290,7 @@ else{turnIndicator.innerHTML = `Player ${player2} Turn`}
 }
 
 
-const marks = new Set([player1, player2])
+let marks = new Set([player1, player2])
 
 
 console.log(tiles)
