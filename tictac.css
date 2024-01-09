@@ -1,15 +1,18 @@
 :root{
     box-sizing: border-box;
-    --lightBlue:#63b5cf ; 
-    --navyBlue: #09475a;
-    --yellow: #ecf273; 
-    --red: rgb(250, 184, 184);
+    --lightBlue:#96d6e9 ; 
+    --navyBlue: #021c24;
+    --yellow: #f5fd5f; 
+    --red: rgb(252, 71, 71);
     --white: #F5F5F5; 
+    font-family: 'Gaegu', sans-serif;
+    box-sizing: border-box;
 
    
 }
 h1{
     color: var(--white);
+    font-size: 52px;
 }
 p{color: var(--white);}
 body{
@@ -47,6 +50,7 @@ body{
 
 #turnIndicator{
     text-align: center;
+    font-size: 32px;
 }
 
 .scoreboard{
@@ -73,10 +77,56 @@ body{
     padding: 10px;
     background-color: rgb(250, 184, 184);
     border-radius: 5px;
+    font-size: 16px;
 }
+
+.tie{
+    background-color: var(--lightBlue);
+}
+.player1{
+    background-color: var(--yellow);
+}
+.player2{
+    background-color: var(--red);
+}
+
 
 .ins{
     border: solid var(--lightBlue) 2px;
-    height: 100%;
-    width: 100%;
+    min-height: 124px;
+    min-width: 124px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    
+}
+
+.Menu{
+display: grid;
+width: 405px;
+grid-template-columns: repeat(6, 1fr); 
+gap: 10px;
+grid-template-areas: 
+". reset reset continue continue ."
+". p p p s .";
+
+}
+
+.resetButton{
+    grid-area: reset;
+}
+.nextButton{
+    grid-area: continue;
+    visibility: hidden;
+}
+
+.labelG{
+    color: var(--white);
+    font-size: 22px;
+    grid-area: p;
+}
+
+#gameMode{
+    grid-area: s;
 }

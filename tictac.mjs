@@ -214,10 +214,24 @@ function checkGameOver(){
     }
 
 }
+const player1ScoreTile = document.querySelector('.player1')
+const player2ScoreTile = document.querySelector('.player2')
+
+function styleTile(tile){
+    if(currentMark == player1){
+        tile.style.color = window.getComputedStyle(player1ScoreTile).backgroundColor
+    }
+    else if(currentMark == player2){
+       tile.style.color =  window.getComputedStyle(player2ScoreTile).backgroundColor
+        
+    }
+
+}
 
 //function called every time an available square is pressed 
 function squareIsPressed(tile){
     tile.innerHTML = currentMark; 
+    styleTile(tile)
     disableTile(tile) 
     updateValues(); 
     changeMark(); 
@@ -248,7 +262,9 @@ function botPlay(easy = false, impossible = false){
 
 function squareIsPressedBot(tile){
     tile.innerHTML = player1;
+    styleTile(tile)
     disableTile(tile)
+    
      //same as square is pressed function, except bot must act other player, this will be done by play the bot turn after the player turn and after cheking all win conditions. 
     updateValues(); 
     

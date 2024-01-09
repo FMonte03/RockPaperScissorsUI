@@ -7,11 +7,14 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="tictac.css">
     </head>
     <body>
         <div class="wrapper">
-            <h1>The TicTacToe</h1>
+            <h1>Tic Tac Toe</h1>
                     <div class="scoreboard">
                         <p id="turnIndicator">Player X Turn</p>
                         <div class="score">
@@ -49,11 +52,12 @@
                 </div>
                 <div class="Menu">
                     <button class="resetButton">RESET</button>
-                    <label for="gameMode">Select Game Mode</label>
+                    <button class="nextButton">Continue</button>
+                    <label class="labelG" for="gameMode">Select Game Mode</label>
                     <select name="gameMode" id="gameMode">
                         <option value="passPlay" selected>Pass Play</option>
                         <option value="easy">Easy</option>
-                        <option value="impossible">Impossible</option>
+                        <option value="impossible">Medium</option>
                     </select>
                 </div>
         </div>
