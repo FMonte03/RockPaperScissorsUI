@@ -14,6 +14,7 @@ let gameTie = false
 let gameOver = false 
 let currentMark = player1
 let gameMode = "passPlay"
+let winningCombo = []
 
 
 //create a list with all square elements 
@@ -22,6 +23,10 @@ const inps = document.querySelectorAll('.ins');
 const resetButton = document.querySelector('.resetButton')
 
 resetButton.addEventListener('click', resetAll)
+
+const continueButton = document.querySelector('nextButton')
+
+continueButton.addEventListener('click', handleContinue)
 
 
 const DEFAULT_PLAYER_MARK = 'X'
@@ -147,6 +152,8 @@ function resetGame(){
 }
 
 
+
+
 const tiles = {}
 // update value of every square every turn to help checkWin functino
 updateValues(); 
@@ -184,6 +191,23 @@ function changeMark() {
 
 }
 
+
+
+function winningComboAnimation(){
+    inps.forEach((inp =>{
+        if(winningCombo.includes(inp.getAttribute('data-value' )))
+    }))
+
+
+}
+
+function showContinue(){
+    continueButton.style.visibility = "visible" 
+}
+
+function handleContinue(){
+
+}
 
 
 
@@ -367,40 +391,48 @@ function checkTie(){
 function checkWin(){
 
     if ((tiles['square1'] == tiles['square2']) && (tiles['square3'] == tiles['square2'])  && marks.has(tiles['square1'])){
-         winner = whoWon(tiles.square1); 
+         winner = whoWon(tiles.square1)
+        winningCombo = ['square1', 'square2', 'square3'] 
     }
     else if ((tiles['square1'] == tiles['square4']) && (tiles['square7'] == tiles['square4'])  && marks.has(tiles['square1'])){
-         winner = whoWon(tiles.square1); 
+         winner = whoWon(tiles.square1)
+         winningCombo = ['square1', 'square4', 'square7'] 
         
     }
     
     else if ((tiles['square2'] == tiles['square5']) && (tiles['square5'] == tiles['square8']) && marks.has(tiles['square2'])){
-         winner = whoWon(tiles.square2); 
+         winner = whoWon(tiles.square2);
+         winningCombo = ['square5', 'square2', 'square8']
         
     }
 
     else if ((tiles['square3'] == tiles['square6']) && (tiles['square6'] == tiles['square9']) && marks.has(tiles['square3'])){
          winner = whoWon(tiles.square3); 
+         winningCombo = ['square9', 'square6', 'square3']
         
     }
 
     else if ((tiles['square4'] == tiles['square5']) && (tiles['square5'] == tiles['square6']) && marks.has(tiles['square4'])){
-         winner = whoWon(tiles.square4); 
+         winner = whoWon(tiles.square4)
+         winningCombo = ['square4', 'square5', 'square6']
         
     }
 
     else if ((tiles['square7'] == tiles['square8']) && (tiles['square8'] == tiles['square9']) && marks.has(tiles['square7'])){
          winner = whoWon(tiles.square7); 
+         winningCombo = ['square7', 'square8', 'square9']
         
     }
 
     else if ((tiles['square1'] == tiles['square5']) && (tiles['square5'] == tiles['square9']) && marks.has(tiles['square1'])) {
          winner = whoWon(tiles.square1); 
+         winningCombo = ['square1', 'square5', 'square9']
         
     }
 
     else if ((tiles['square3'] == tiles['square5']) && (tiles['square5'] == tiles['square7']) && marks.has(tiles['square3'])){
          winner = whoWon(tiles.square3); 
+         winningCombo = ['square5', 'square7', 'square3']
         
     }
     else {

@@ -60,7 +60,7 @@ export class mediumBot{
         a2 = a2.split(",")
 
         let result = null
-        let combinations = [r1,r2,r3,c1,c2,c3,a1,a2] //loop through every conbination, if there is a 2 in a row for bot and leftover is available, win. if 2 in a row for player, block.
+        let combinations = [r1,r2,r3,c1,c2,c3,a1,a2] //loop through every combination, if there is a 2 in a row for bot and leftover is available, win. if 2 in a row for player, block.
         combinations.forEach(combination => {
             let p = 0 
             let b = 0 

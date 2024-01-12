@@ -107,8 +107,9 @@ display: grid;
 width: 405px;
 grid-template-columns: repeat(6, 1fr); 
 gap: 10px;
-grid-template-areas: 
-". reset reset continue continue ."
+grid-template-areas:
+". . continue continue . ." 
+". . reset  reset . ."
 ". p p p s .";
 
 }
