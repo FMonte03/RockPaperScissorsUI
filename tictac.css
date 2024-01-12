@@ -44,9 +44,7 @@ body{
     
 }
 
-.board>*{
-    color: var(--white);
-}
+
 
 #turnIndicator{
     text-align: center;
@@ -99,6 +97,7 @@ body{
     justify-content: center;
     align-items: center;
     font-size: 36px;
+    transition: background-color 1s;
     
 }
 

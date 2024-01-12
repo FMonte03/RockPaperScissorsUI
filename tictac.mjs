@@ -24,9 +24,9 @@ const resetButton = document.querySelector('.resetButton')
 
 resetButton.addEventListener('click', resetAll)
 
-const continueButton = document.querySelector('nextButton')
+const continueButton = document.querySelector('.nextButton')
 
-continueButton.addEventListener('click', handleContinue)
+continueButton.addEventListener('click', resetGame)
 
 
 const DEFAULT_PLAYER_MARK = 'X'
@@ -56,6 +56,9 @@ function setPassPlayTheme(){
     
 }
 */
+
+
+
 function handlePlayerChoice(){
     if (gameMode=="passPlay"){
         player2 = "O"
@@ -65,13 +68,15 @@ function handlePlayerChoice(){
         player2Name = "Duckling"
     player2 = "🦆"
     marks = new Set([player1, player2])
+    currentMark = player1
+   
     squareIsPressedBot(this)
-    
 }
 else{
     player2Name = "THE EAGLE"
 player2= "🦅"
 marks = new Set([player1, player2])
+currentMark = player1
     squareIsPressedBot(this)
 }
 
@@ -130,15 +135,24 @@ function awardPoint(winner){
 
 } 
 
+function resetTileColor(){
+    inps.forEach(inp => {
+        inp.style.backgroundColor = "#021c24"
+        inp.style.border = "2px solid #96d6e9"
+        
+    })
+}
+
 function resetAll(){
     resetGame()
-   
     player1Score = 0 
     player2Score = 0 
     tieScore = 0 
     player1ScoreBoard.innerHTML = `${player1Score}`
     player2ScoreBoard.innerHTML = `${player2Score}`
     tieScoreBoard.innerHTML = `${tieScore}`
+    currentMark = player1
+    updateTurnIndicator()
 
 }
 function resetGame(){
@@ -147,6 +161,11 @@ function resetGame(){
     gameOver = false 
     updateValues(true)
     enableAllTiles()
+    resetTileColor()
+    updateTurnIndicator()
+    continueButton.style.visibility = "hidden"
+    winningCombo = []
+
 
 
 }
@@ -195,19 +214,24 @@ function changeMark() {
 
 function winningComboAnimation(){
     inps.forEach((inp =>{
-        if(winningCombo.includes(inp.getAttribute('data-value' )))
+        if(winningCombo.includes(inp.getAttribute('data-value' ))){
+            inp.style.backgroundColor = "Silver"
+            inp.style.border = "2px solid #f5fd5f"
+        }
     }))
 
 
 }
 
-function showContinue(){
-    continueButton.style.visibility = "visible" 
+
+function handleGameOver(){
+    continueButton.style.visibility = "visible" //turn on continue button 
+    winningComboAnimation()
+    inps.forEach(inp => {disableTile(inp)})
+
+
 }
 
-function handleContinue(){
-
-}
 
 
 
@@ -225,14 +249,14 @@ function checkGameOver(){
     if (gameOver && !gameTie){
         playerWins()
         awardPoint(winner)
-        resetGame()
+        handleGameOver()
         return true
 
     }
     else if(gameOver && gameTie){
         gameisTie()
         awardPoint()
-        resetGame()
+        handleGameOver()
         return true
 
     }
@@ -285,7 +309,7 @@ function botPlay(easy = false, impossible = false){
 }
 
 function squareIsPressedBot(tile){
-    tile.innerHTML = player1;
+    tile.innerHTML = currentMark;
     styleTile(tile)
     disableTile(tile)
     

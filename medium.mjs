@@ -80,13 +80,14 @@ export class mediumBot{
 
             }
 
-            if(p == 2 && e !== ""){
-                console.log("BLOCK")
-                result = e     
-            }
-            else if(b == 2 && e !==""){
+            
+            if(b == 2 && e !==""){
                 console.log("Win")
                 result = e 
+            }
+            else if(p == 2 && e !== ""){
+                console.log("BLOCK")
+                result = e     
             }
             if(result !== null){
                 return 
