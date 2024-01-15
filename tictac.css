@@ -1,7 +1,7 @@
 :root{
     box-sizing: border-box;
     --lightBlue:#96d6e9 ; 
-    --navyBlue: #021c24;
+    --navyBlue: #1D1E3D;
     --yellow: #f5fd5f; 
     --red: rgb(252, 71, 71);
     --white: #F5F5F5; 
@@ -12,11 +12,12 @@
 }
 h1{
     color: var(--white);
-    font-size: 52px;
+    font-size: 60px;
+    margin: 0px;
 }
 p{color: var(--white);}
 body{
-    background-color: var(--navyBlue);
+    background-image: url(./tic-tac-toe-seamless-background-on-dark-blue-illustration-vector.jpg);
     position: relative;
     height: 100vh;
     width: 100vw;
@@ -28,33 +29,60 @@ body{
 }
 
 .wrapper{
+  background-color: var(--navyBlue); 
+    position: fixed;
+    top: 0;
     display: grid;
     overflow: hidden;
     place-items: center;
+    height: 100vh;
     width: 50%;
     grid-template-columns: 1fr;
 }
 
 
-.board{
+.board {
     height: 40vh;
-    aspect-ratio: 1/1;
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+   
     
+    width: 40vh;
 }
 
+.ins {
+    border: solid var(--lightBlue) 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    transition: background-color 1s;
+    box-sizing: border-box;
+    align-self: center;
+}
+
+.board .ins{
+    height: 100%;
+    width: 100%;
+}
+
+.score>*>*{
+    font-size: 20px;
+}
 
 
 #turnIndicator{
     text-align: center;
-    font-size: 32px;
+    font-size: 40px;
+    margin-top: 0;
 }
 
 .scoreboard{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    align-self: center;
 
 }
 
@@ -89,44 +117,138 @@ body{
 }
 
 
-.ins{
-    border: solid var(--lightBlue) 2px;
-    min-height: 124px;
-    min-width: 124px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 36px;
-    transition: background-color 1s;
-    
-}
 
 .Menu{
+  
 display: grid;
-width: 405px;
-grid-template-columns: repeat(6, 1fr); 
+
+
+width: 40vh;
+height: 80%;
+grid-template-columns: repeat(10, 1fr); 
 gap: 10px;
 grid-template-areas:
-". . continue continue . ." 
-". . reset  reset . ."
-". p p p s .";
+". . . . continue continue . . . ." 
+". . . .  reset reset . . . ."
+" . p p p p   s s s . .";
 
+}
+
+.Menu>*{
+align-self: center;
 }
 
 .resetButton{
+    background-color: transparent;
+    color:  var(--white);
     grid-area: reset;
+    border: 2px solid var(--white);
+    
+   
+   
 }
 .nextButton{
     grid-area: continue;
-    visibility: hidden;
 }
+
+.resetButton:hover{
+    background-color: var(--white);
+    color: var(--navyBlue);
+}
+
 
 .labelG{
     color: var(--white);
-    font-size: 22px;
+    font-size: 18px;
+    width: 100%;
+    font-weight: bold;
     grid-area: p;
 }
 
 #gameMode{
     grid-area: s;
+}
+
+button{
+    background-color: transparent;
+    color:  var(--white);
+   
+    border: 2px solid var(--white);
+    width: 125px;
+    height: 25px    ;
+    border-radius: 8px;
+    cursor: pointer; 
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    
+}
+button:active{
+    scale: .95;
+}
+
+button:hover{
+    background-color: var(--white);
+    color: var(--navyBlue);
+}
+#gameMode{
+    background-color: var(--navyBlue);
+    border: var(--white) 2px solid;
+    border-radius: 2px;
+    width: 100%;
+    padding: 5px;
+    font-weight: bold;
+    color: var(--white);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#gameMode:hover{
+    background-color: var(--white);
+    color: var(--navyBlue);
+    border: 2px solid var(--navyBlue) ;
+    cursor: pointer;
+}
+
+
+@media only screen and (max-width: 425px) {
+
+    .wrapper{
+        background-color: var(--navyBlue); 
+        
+          height: 100vh;
+          width: 100%;
+          
+        }
+:root{
+    background-color: var(--navyBlue);
+}
+
+        body{
+            background-image: none;
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+            align-items: center;
+            
+           
+        }
+}
+
+@media only screen and (max-width: 375px) {
+    h1{
+        font-size: 45px;
+    }
+    .board{
+        height: 32vh;
+        width: 32vh;
+    }
+    .score>*>* {
+        font-size: 15px;
+    }
+
+    #turnIndicator{
+        font-size: 30px;
+    }
 }

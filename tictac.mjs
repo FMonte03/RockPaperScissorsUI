@@ -4,8 +4,8 @@ import {mediumBot} from './medium.mjs'
 
 let player1 = 'X'
 let player2 = 'O'          
-let player1Name = 'Filippo'
-let player2Name = 'not Filippo'
+let player1Name = 'Player 1'
+let player2Name = 'Player 2'
 let winner = "" 
 let player1Score = 0 
 let player2Score = 0 
