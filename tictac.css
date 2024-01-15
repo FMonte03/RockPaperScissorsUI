@@ -56,7 +56,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 36px;
+    font-size: 2.5rem;
     transition: background-color 1s;
     box-sizing: border-box;
     align-self: center;
@@ -81,14 +81,15 @@ body{
 .scoreboard{
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-self: center;
+    
+    
 
 }
 
 .score{
     display: grid;
-    column-gap: 10px;
     grid-template-columns: repeat(3, 1fr);
 
     
@@ -104,6 +105,7 @@ body{
     background-color: rgb(250, 184, 184);
     border-radius: 5px;
     font-size: 16px;
+    margin: 0.5rem;
 }
 
 .tie{
@@ -218,6 +220,16 @@ button:hover{
           width: 100%;
           
         }
+        .board{
+            width: 34vh;
+            height: 34vh;
+        }
+        .score{
+            width: 34vh;
+        }
+        .score>*>* {
+            font-size: 16px;
+        }
 :root{
     background-color: var(--navyBlue);
 }
@@ -251,4 +263,50 @@ button:hover{
     #turnIndicator{
         font-size: 30px;
     }
+}
+
+@media only screen and (min-width: 2000px) {
+h1{
+    font-size: 125px;
+}
+.score>*>* {
+    font-size: 50px;
+}
+#turnIndicator{
+    font-size: 75px;
+}
+
+.Menu{
+  
+    display: grid;
+    
+    
+    width: 40vh;
+    height: 80%;
+    grid-template-columns: repeat(10, 1fr); 
+    gap: 10px;
+    grid-template-areas:
+    ". . continue continue continue continue continue continue . ." 
+    ". . reset reset  reset reset reset reset . ."
+    " . p p p p   s s s . .";
+    
+    }
+button{width: 75%;
+height: 75%;
+font-size: 1.5rem;
+justify-self: center;}
+
+
+.labelG{
+    font-size: 2rem;
+}
+
+#gameMode{
+    font-size: 1.5rem;
+}
+
+.ins{
+    font-size: 6rem;
+}
+
 }
